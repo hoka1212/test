@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PIT WALL</title>
+<meta name="description" content="Командный центр фаната Формулы 1: сезон, пилоты, дуэли и мини-игры.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<!--PAGE-->
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="PIT WALL, наверх">PIT<span class="brand-gap"></span>WALL</a>
+  <nav class="nav" aria-label="Разделы">
+    <a href="#season">Сезон</a>
+    <a href="#drivers">Пилоты</a>
+    <a href="#duel">Дуэль</a>
+    <a href="#games">Игры</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="hero-kicker" id="hero-round">Этап —</p>
+      <h1 id="hero-title" class="hero-title">—</h1>
+      <p class="hero-place" id="hero-place"></p>
+      <div class="countdown" id="countdown" role="timer" aria-live="off">
+        <div><b id="cd-d">00</b><span>дней</span></div>
+        <div><b id="cd-h">00</b><span>часов</span></div>
+        <div><b id="cd-m">00</b><span>минут</span></div>
+        <div><b id="cd-s">00</b><span>секунд</span></div>
+      </div>
+      <p class="hero-start" id="hero-start"></p>
+    </div>
+    <figure class="hero-track" aria-hidden="true">
+      <svg viewBox="-20 -20 540 540" id="hero-svg">
+        <path class="track-base" id="hero-path" d=""></path>
+        <path class="track-trace" id="hero-trace" d=""></path>
+        <circle class="track-car" id="hero-car" r="9" cx="-100" cy="-100"></circle>
+      </svg>
+      <figcaption id="hero-caption"></figcaption>
+    </figure>
+  </section>
+
+  <section id="season" class="block" aria-labelledby="season-title">
+    <div class="block-head">
+      <h2 id="season-title">Сезон <span id="season-year">2026</span></h2>
+      <p class="block-note" id="season-note"></p>
+    </div>
+    <ol class="calendar" id="calendar"></ol>
+  </section>
+
+  <section id="drivers" class="block" aria-labelledby="drivers-title">
+    <div class="block-head">
+      <h2 id="drivers-title">Пилоты и команды</h2>
+      <p class="block-note">Нажми на пилота, чтобы отправить его в дуэль.</p>
+    </div>
+    <div class="standings">
+      <div class="standings-col">
+        <h3>Личный зачёт</h3>
+        <ol class="driver-list" id="driver-list"></ol>
+      </div>
+      <div class="standings-col">
+        <h3>Кубок конструкторов</h3>
+        <ol class="team-list" id="team-list"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="duel" class="block" aria-labelledby="duel-title">
+    <div class="block-head">
+      <h2 id="duel-title">Дуэль</h2>
+      <p class="block-note">Сравни двух пилотов по ходу сезона.</p>
+    </div>
+    <div class="duel-pickers">
+      <label for="duel-a">Пилот 1<select id="duel-a"></select></label>
+      <span class="duel-vs" aria-hidden="true">vs</span>
+      <label for="duel-b">Пилот 2<select id="duel-b"></select></label>
+    </div>
+    <div class="duel-grid">
+      <div class="holo-wrap"><article class="holo" id="holo-a"></article></div>
+      <div class="duel-center">
+        <dl class="duel-stats" id="duel-stats"></dl>
+      </div>
+      <div class="holo-wrap"><article class="holo" id="holo-b"></article></div>
+    </div>
+    <figure class="chart">
+      <figcaption>Набранные очки по этапам</figcaption>
+      <div class="chart-scroll"><svg id="duel-chart" role="img" aria-label="График очков двух пилотов по этапам"></svg></div>
+    </figure>
+  </section>
+
+  <section id="games" class="block" aria-labelledby="games-title">
+    <div class="block-head">
+      <h2 id="games-title">Игры</h2>
+    </div>
+    <div class="games">
+      <article class="game" id="lights" aria-labelledby="lights-title">
+        <header class="game-head">
+          <h3 id="lights-title">Lights Out</h3>
+          <p>Пять красных огней. Когда погаснут, жми как можно быстрее.</p>
+        </header>
+        <button class="lights-pad" id="lights-pad" type="button" aria-describedby="lights-status">
+          <span class="gantry" aria-hidden="true">
+            <span class="pod"><i></i><i></i></span><span class="pod"><i></i><i></i></span><span class="pod"><i></i><i></i></span><span class="pod"><i></i><i></i></span><span class="pod"><i></i><i></i></span>
+          </span>
+          <span class="lights-readout" id="lights-time">0.000</span>
+          <span class="lights-status" id="lights-status">Нажми, чтобы встать на стартовую решётку</span>
+        </button>
+        <dl class="lights-meta">
+          <div><dt>Лучшее время</dt><dd id="lights-best">—</dd></div>
+          <div><dt>Пилоты Ф1 на старте</dt><dd>≈ 0.200</dd></div>
+        </dl>
+      </article>
+
+      <article class="game" id="ghost" aria-labelledby="ghost-title">
+        <header class="game-head">
+          <h3 id="ghost-title">Призрачный круг</h3>
+          <p>Угадай трассу по силуэту. Все 78 трасс, на которых проходили Гран-при, с 1950 года.</p>
+        </header>
+        <div class="ghost-modes" role="radiogroup" aria-label="Режим игры" id="ghost-modes">
+          <button type="button" role="radio" aria-checked="true" data-mode="season"><span>Сезон <span id="ghost-year">2026</span></span><small>трассы текущего календаря</small></button>
+          <button type="button" role="radio" aria-checked="false" data-mode="history"><span>Вся история</span><small>78 трасс, любые годы</small></button>
+          <button type="button" role="radio" aria-checked="false" data-mode="phantom"><span>Фантом</span><small>видна только точка с хвостом</small></button>
+        </div>
+        <div class="ghost-stage" id="ghost-stage">
+          <div class="ghost-hud">
+            <span id="ghost-progress">Круг 1 из 10</span>
+            <span id="ghost-score">0 очков</span>
+          </div>
+          <svg viewBox="-20 -20 540 540" class="ghost-svg" id="ghost-svg" aria-label="Силуэт трассы" role="img">
+            <path class="ghost-full" id="ghost-full" d=""></path>
+            <path class="ghost-trace" id="ghost-trace" d=""></path>
+          </svg>
+          <p class="ghost-reveal" id="ghost-reveal" aria-live="polite"></p>
+          <div class="ghost-options" id="ghost-options"></div>
+          <div class="ghost-actions">
+            <button type="button" class="btn-ghost" id="ghost-hint">Подсказка 50/50</button>
+            <button type="button" class="btn-primary" id="ghost-next">Начать заезд</button>
+          </div>
+        </div>
+        <p class="ghost-best">Рекорд в этом режиме: <b id="ghost-best">—</b></p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Фанатский проект, не связан с Formula 1. Данные сезона: <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica F1 API</a>. Схемы трасс: <a href="https://github.com/MisterSix2295/f1-circuits-svg" target="_blank" rel="noopener">f1-circuits-svg</a> (Jules Roy, MIT) и <a href="https://github.com/bacinger/f1-circuits" target="_blank" rel="noopener">bacinger/f1-circuits</a> (MIT).</p>
+  <p id="data-stamp"></p>
+</footer>
+<!--/PAGE-->
+<script src="data/circuits.js"></script>
+<script src="data/season.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/games.js"></script>
+</body>
+</html>
