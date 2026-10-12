@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PIT WALL</title>
-<meta name="description" content="Командный центр фаната Формулы 1: сезон, пилоты, дуэли и мини-игры.">
+<meta name="description" content="Командный центр фаната Формулы 1: 3D-болиды, пролёт по трассе, сезон 2026, дуэли пилотов и мини-игры.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;800&family=Golos+Text:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
 <body>
 <!--PAGE-->
@@ -19,31 +20,44 @@
     <a href="#drivers">Пилоты</a>
     <a href="#duel">Дуэль</a>
     <a href="#games">Игры</a>
+    <a class="nav-anatomy" href="anatomy/index.html">Анатомия</a>
   </nav>
 </header>
 
 <main id="top">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="hero-kicker" id="hero-round">Этап —</p>
-      <h1 id="hero-title" class="hero-title">—</h1>
-      <p class="hero-place" id="hero-place"></p>
-      <div class="countdown" id="countdown" role="timer" aria-live="off">
-        <div><b id="cd-d">00</b><span>дней</span></div>
-        <div><b id="cd-h">00</b><span>часов</span></div>
-        <div><b id="cd-m">00</b><span>минут</span></div>
-        <div><b id="cd-s">00</b><span>секунд</span></div>
+  <!-- Hero: a real 2026 car; scrolling flies the camera around it -->
+  <section class="hero3d" id="hero3d" aria-labelledby="hero-title">
+    <div class="hero3d-pin">
+      <div class="hero3d-stage" id="hero-stage" aria-hidden="true"></div>
+      <div class="hero3d-copy" id="hero-copy">
+        <p class="hero-kicker" id="hero-round">Этап —</p>
+        <h1 id="hero-title" class="hero-title">—</h1>
+        <p class="hero-place" id="hero-place"></p>
+        <div class="countdown" id="countdown" role="timer" aria-live="off">
+          <div><b id="cd-d">00</b><span>дней</span></div>
+          <div><b id="cd-h">00</b><span>часов</span></div>
+          <div><b id="cd-m">00</b><span>минут</span></div>
+          <div><b id="cd-s">00</b><span>секунд</span></div>
+        </div>
+        <p class="hero-start" id="hero-start"></p>
       </div>
-      <p class="hero-start" id="hero-start"></p>
+      <div class="hero3d-teams" id="hero-teams" role="radiogroup" aria-label="Болид на главном экране"></div>
+      <div class="hero3d-caption" id="hero-caption" aria-live="polite"></div>
+      <p class="hero3d-hint" id="hero-hint">Наведи на болид, чтобы повернуть его. Нажми, чтобы сменить команду. Листай вниз — облетим машину.</p>
     </div>
-    <figure class="hero-track" aria-hidden="true">
-      <svg viewBox="-20 -20 540 540" id="hero-svg">
-        <path class="track-base" id="hero-path" d=""></path>
-        <path class="track-trace" id="hero-trace" d=""></path>
-        <circle class="track-car" id="hero-car" r="9" cx="-100" cy="-100"></circle>
-      </svg>
-      <figcaption id="hero-caption"></figcaption>
-    </figure>
+  </section>
+
+  <!-- Fly-through: scroll drives a lap of the next race's circuit -->
+  <section class="flyover" id="flyover" aria-labelledby="fly-title">
+    <div class="flyover-pin">
+      <div class="flyover-stage" id="fly-stage" aria-hidden="true"></div>
+      <div class="flyover-hud">
+        <h2 id="fly-title" class="fly-title"></h2>
+        <dl class="fly-stats" id="fly-stats"></dl>
+        <div class="fly-progress" aria-hidden="true"><i id="fly-bar"></i></div>
+        <p class="fly-note" id="fly-note"></p>
+      </div>
+    </div>
   </section>
 
   <section id="season" class="block" aria-labelledby="season-title">
@@ -53,6 +67,16 @@
     </div>
     <ol class="calendar" id="calendar"></ol>
   </section>
+
+  <a class="anatomy-banner" href="anatomy/index.html" aria-labelledby="ab-title">
+    <div class="anatomy-banner-stage" id="ab-stage" aria-hidden="true"></div>
+    <div class="anatomy-banner-copy">
+      <p class="ab-kicker">Новый раздел</p>
+      <h2 id="ab-title">Анатомия болида</h2>
+      <p>28 настоящих машин XXI века, от Ferrari F2002 до болидов 2026 года. Выбери команду и ливрею, а потом разбери машину по деталям.</p>
+      <span class="ab-cta">Открыть анатомию</span>
+    </div>
+  </a>
 
   <section id="drivers" class="block" aria-labelledby="drivers-title">
     <div class="block-head">
@@ -150,7 +174,7 @@
 </main>
 
 <footer class="footer">
-  <p>Фанатский проект, не связан с Formula 1. Данные сезона: <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica F1 API</a>. Схемы трасс: <a href="https://github.com/MisterSix2295/f1-circuits-svg" target="_blank" rel="noopener">f1-circuits-svg</a> (Jules Roy, MIT) и <a href="https://github.com/bacinger/f1-circuits" target="_blank" rel="noopener">bacinger/f1-circuits</a> (MIT).</p>
+  <p>Фанатский проект, не связан с Formula 1. Данные сезона: <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica F1 API</a>. Схемы трасс: <a href="https://github.com/MisterSix2295/f1-circuits-svg" target="_blank" rel="noopener">f1-circuits-svg</a> (Jules Roy, MIT) и <a href="https://github.com/bacinger/f1-circuits" target="_blank" rel="noopener">bacinger/f1-circuits</a> (MIT). 3D-модели болидов: Sketchfab, CC BY 4.0, авторы перечислены на странице <a href="anatomy/index.html">«Анатомия»</a>.</p>
   <p id="data-stamp"></p>
 </footer>
 <!--/PAGE-->
@@ -158,5 +182,6 @@
 <script src="data/season.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/games.js"></script>
+<script type="module" src="assets/home3d.js"></script>
 </body>
 </html>

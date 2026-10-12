@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Анатомия болида · PIT WALL</title>
+<meta name="description" content="28 настоящих болидов Формулы 1 XXI века в 3D: выбор эпохи, команды и ливреи, разбор по деталям.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700&family=Golos+Text:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/anatomy.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<!--PAGE-->
+<header class="a-top">
+  <a class="a-back" href="../index.html">PIT WALL</a>
+  <span class="a-crumb">Анатомия болида</span>
+</header>
+
+<main class="a-main">
+  <section class="a-intro">
+    <h1>Анатомия болида</h1>
+    <p>28 настоящих машин Формулы 1 XXI века, от Ferrari F2002 до болидов 2026 года. Выбери эпоху и команду, смени ливрею и разбери машину на детали.</p>
+  </section>
+
+  <nav class="a-eras" id="eras" aria-label="Эпохи регламента"></nav>
+
+  <div class="a-grid">
+    <aside class="a-panel a-pick">
+      <h2 id="era-title"></h2>
+      <p class="a-years" id="era-years"></p>
+      <ul class="a-rules" id="era-rules"></ul>
+      <h3>Команда</h3>
+      <div class="a-cars" id="cars" role="radiogroup" aria-label="Болид"></div>
+    </aside>
+
+    <section class="a-viewer" aria-label="3D-модель болида">
+      <div class="a-stage" id="stage"></div>
+      <div class="a-hud">
+        <div class="a-title"><b id="car-name"></b><span id="car-meta"></span></div>
+        <div class="a-load" id="loading" hidden><span id="load-bar"></span><em>Загружаю модель…</em></div>
+        <p class="a-tip" id="tip" aria-hidden="true"></p>
+      </div>
+      <div class="a-actions">
+        <button type="button" class="a-btn a-btn-main" id="explode">Разобрать на детали</button>
+        <button type="button" class="a-btn" id="reset">Вернуть вид</button>
+      </div>
+      <p class="a-hint">Потяни, чтобы повернуть. Сведи пальцы, чтобы приблизить. Нажми на деталь, чтобы узнать о ней.</p>
+    </section>
+
+    <aside class="a-panel a-info">
+      <h3>Ливрея</h3>
+      <div class="a-liveries" id="liveries" role="radiogroup" aria-label="Ливрея"></div>
+      <h3>Машина</h3>
+      <dl class="a-specs" id="specs"></dl>
+      <ul class="a-facts" id="facts"></ul>
+      <h3>Детали</h3>
+      <div class="a-parts" id="parts"></div>
+      <article class="a-part" id="part-card" hidden>
+        <h4 id="part-name"></h4>
+        <p id="part-text"></p>
+        <p class="a-part-era" id="part-era"></p>
+      </article>
+    </aside>
+  </div>
+</main>
+
+<footer class="a-foot">
+  <p>3D-модели: Sketchfab, лицензия <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Детали внутри кузова (силовая установка) показаны схематично. Фанатский проект, не связан с Formula 1.</p>
+  <details>
+    <summary>Авторы моделей</summary>
+    <ul id="credits"></ul>
+  </details>
+</footer>
+<!--/PAGE-->
+<script src="../data/season.js"></script>
+<script type="module" src="../assets/anatomy.js"></script>
+</body>
+</html>

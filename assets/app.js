@@ -9,9 +9,9 @@
   const SVG_NS = "http://www.w3.org/2000/svg";
 
   const TEAM_COLORS = {
-    mercedes: "#27f4d2", ferrari: "#ff2f3f", mclaren: "#ff8000", red_bull: "#4f7cff",
-    rb: "#7fa8ff", alpine: "#ff6fd0", haas: "#c3c7cf", audi: "#e8e2d4", sauber: "#52e252",
-    williams: "#3fa0ff", aston_martin: "#2ecc8f", cadillac: "#d9b45a",
+    mercedes: "#00a19b", ferrari: "#e8002d", mclaren: "#ff8000", red_bull: "#3671c6",
+    rb: "#6692ff", alpine: "#ff87bc", haas: "#9aa0a6", audi: "#8a8f98", sauber: "#52e252",
+    williams: "#1868db", aston_martin: "#229971", cadillac: "#b8952d",
   };
   const TEAM_NAMES = {
     mercedes: "Mercedes", ferrari: "Ferrari", mclaren: "McLaren", red_bull: "Red Bull",
@@ -39,13 +39,14 @@
     svg.setAttribute("aria-hidden", "true");
     const p = document.createElementNS(SVG_NS, "path");
     p.setAttribute("d", d);
+    p.setAttribute("pathLength", "1");
     svg.appendChild(p);
     return svg;
   }
   const latestLayout = (c) => c.layouts[c.layouts.length - 1];
 
   // Shared helpers for games.js
-  window.PitWall = { CIRCUITS, BY_ID, flag, REDUCED, latestLayout, SEASON };
+  window.PitWall = { CIRCUITS, BY_ID, flag, REDUCED, latestLayout, SEASON, nextRace: () => nextRace() };
 
   /* ---------- Season state ---------- */
   function nextRace() {
@@ -55,7 +56,6 @@
 
   /* ---------- Hero ---------- */
   let heroTimer = 0;
-  let carFrame = 0;
   function renderHero() {
     const race = nextRace();
     const last = SEASON.races[SEASON.races.length - 1];
@@ -71,14 +71,6 @@
       weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit",
     }) + " по твоему времени";
 
-    if (c) {
-      const lay = latestLayout(c);
-      $("#hero-path").setAttribute("d", lay.d);
-      $("#hero-trace").setAttribute("d", lay.d);
-      $("#hero-caption").textContent = `${c.official} · конфигурация ${lay.seasons.replace(/,/g, ", ")}`;
-      animateHeroTrack();
-    }
-
     clearInterval(heroTimer);
     const tick = () => {
       let ms = Math.max(0, start.getTime() - Date.now());
@@ -93,42 +85,6 @@
     };
     tick();
     heroTimer = setInterval(tick, 1000);
-  }
-
-  function animateHeroTrack() {
-    const trace = $("#hero-trace");
-    const car = $("#hero-car");
-    const len = trace.getTotalLength();
-    cancelAnimationFrame(carFrame);
-    if (REDUCED) {
-      trace.style.strokeDasharray = "none";
-      const p = trace.getPointAtLength(0);
-      car.setAttribute("cx", p.x);
-      car.setAttribute("cy", p.y);
-      return;
-    }
-    // One orchestrated moment: the lap draws in once, then a single car keeps lapping.
-    const drawMs = 2600;
-    const lapMs = 9000;
-    const t0 = performance.now();
-    trace.style.strokeDasharray = `${len} ${len}`;
-    const frame = (now) => {
-      const t = now - t0;
-      if (t < drawMs) {
-        const k = 1 - Math.pow(1 - t / drawMs, 3);
-        trace.style.strokeDashoffset = String(len * (1 - k));
-        const p = trace.getPointAtLength(len * k);
-        car.setAttribute("cx", p.x);
-        car.setAttribute("cy", p.y);
-      } else {
-        trace.style.strokeDashoffset = "0";
-        const p = trace.getPointAtLength((((t - drawMs) % lapMs) / lapMs) * len);
-        car.setAttribute("cx", p.x);
-        car.setAttribute("cy", p.y);
-      }
-      carFrame = requestAnimationFrame(frame);
-    };
-    carFrame = requestAnimationFrame(frame);
   }
 
   /* ---------- Calendar ---------- */
