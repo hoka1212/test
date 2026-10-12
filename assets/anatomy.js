@@ -1,4 +1,4 @@
-import { THREE, createStage, loadCar, splitParts, setExplode, highlight, partBox, applyLivery, PART_ORDER } from "./f1-3d.js";
+import { THREE, createStage, loadCar, splitParts, setExplode, highlight, partBox, applyLivery, PART_ORDER, modelUrl } from "./f1-3d.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { ERAS, CARS, PARTS } from "../data/cars.js";
 
@@ -10,7 +10,6 @@ const el = (tag, cls, text) => {
   return n;
 };
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const MODEL_BASE = new URL("../models/", import.meta.url).href;
 
 const LIVERIES = [
   { id: "original", label: "Оригинал", sw: "conic-gradient(#e10600 0 25%, #00d2be 0 50%, #ff8000 0 75%, #1e3d8f 0)" },
@@ -211,7 +210,7 @@ async function selectCar(id) {
   $("#load-bar").style.setProperty("--p", "0%");
   let car;
   try {
-    car = await loadCar(MODEL_BASE + c.id + ".glb", (p) => $("#load-bar").style.setProperty("--p", Math.round(p * 100) + "%"), { length: c.length });
+    car = await loadCar(modelUrl(c.id), (p) => $("#load-bar").style.setProperty("--p", Math.round(p * 100) + "%"), { length: c.length });
   } catch (e) {
     loading.querySelector("em").textContent = "Модель не загрузилась. Проверь соединение и выбери машину ещё раз.";
     return;

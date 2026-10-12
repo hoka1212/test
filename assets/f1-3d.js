@@ -5,6 +5,12 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 export { THREE };
 
+// GitHub Pages serves the binary .glb files; hosts that only serve text get self-contained .json glTF copies.
+export function modelUrl(id) {
+  const ext = window.PW_MODEL_FORMAT === "json" ? "json" : "glb";
+  return new URL(`../models/${id}.${ext}`, import.meta.url).href;
+}
+
 const loader = new GLTFLoader();
 const cache = new Map();
 

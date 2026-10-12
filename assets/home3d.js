@@ -1,10 +1,9 @@
-import { THREE, createStage, loadCar, splitParts, setExplode } from "./f1-3d.js";
+import { THREE, createStage, loadCar, splitParts, setExplode, modelUrl } from "./f1-3d.js";
 import { CARS } from "../data/cars.js";
 
 const PW = window.PitWall;
 const SEASON = window.F1_SEASON;
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const MODELS = new URL("../models/", import.meta.url).href;
 const $ = (s) => document.querySelector(s);
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const smooth = (a, b, v) => { const t = clamp01((v - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -64,7 +63,7 @@ function scrollProgress(section) {
     markChips();
     const c = HERO_CARS[state.idx];
     const token = ++state.token;
-    const car = await loadCar(MODELS + c.id + ".glb", null, { length: c.length });
+    const car = await loadCar(modelUrl(c.id), null, { length: c.length });
     if (token !== state.token) return;
     const holder = new THREE.Group();
     holder.add(car);
@@ -288,7 +287,7 @@ function scrollProgress(section) {
   const holder = new THREE.Group();
   scene.add(holder);
   const carDef = HERO_CARS[0];
-  loadCar(MODELS + carDef.id + ".glb", null, { length: carDef.length }).then((car) => {
+  loadCar(modelUrl(carDef.id), null, { length: carDef.length }).then((car) => {
     car.scale.setScalar(2.2);
     holder.add(car);
   });
@@ -340,7 +339,7 @@ function scrollProgress(section) {
     io.disconnect();
     const stage = createStage(el, { theme: "dark", transparent: true, fov: 30, ground: false, maxDpr: 1.6 });
     const def = CARS.find((c) => c.id === "f2004");
-    loadCar(MODELS + def.id + ".glb", null, { length: def.length }).then((car) => {
+    loadCar(modelUrl(def.id), null, { length: def.length }).then((car) => {
       car.userData.era = def.year;
       splitParts(car);
       stage.scene.add(car);
